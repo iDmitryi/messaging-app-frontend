@@ -3,12 +3,21 @@ import { signInWithPopup } from "firebase/auth";
 
 import { Button } from "@mui/material";
 import "./Login.css";
+import { useStateValue } from "../store/StateProvider";
+import { actionTypes } from "../store/reducer";
 
 const Login = () => {
+  const [{}, dispatch] = useStateValue();
+
   const signIn = () => {
-    signInWithPopup(auth, provider).then((result) =>
-      console.log(result).catch((error) => alert(error))
-    );
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        dispatch({
+          type: actionTypes.SET_USER,
+          user: result.user,
+        });
+      })
+      .catch((error) => alert(error));
   };
 
   return (

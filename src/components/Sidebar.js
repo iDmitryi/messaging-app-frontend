@@ -9,12 +9,15 @@ import {
 import SidebarChat from "./SidebarChat";
 
 import "./Sidebar.css";
+import { useStateValue } from "../store/StateProvider";
 
-const Sidebar = () => {
+const Sidebar = ({ messages }) => {
+  const [{ user }, dispatch] = useStateValue();
+
   return (
     <div className="sidebar">
       <div className="sidebar__header">
-        <Avatar src="https://cdn.iconscout.com/icon/free/png-256/avatar-370-456322.png" />
+        <Avatar src={user?.photoURL} />
         <div className="sidebar__headerRight">
           <Button>
             <DonutLarge />
@@ -34,9 +37,7 @@ const Sidebar = () => {
         </div>
       </div>
       <div className="sidebar__chats">
-        <SidebarChat />
-        <SidebarChat />
-        <SidebarChat />
+        <SidebarChat messages={messages} />
       </div>
     </div>
   );

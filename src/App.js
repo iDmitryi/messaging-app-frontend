@@ -6,10 +6,11 @@ import Sidebar from "./components/Sidebar";
 import Chat from "./components/Chat";
 import "./App.css";
 import Login from "./components/Login";
+import { useStateValue } from "./store/StateProvider";
 
 function App() {
   const [messages, setMessages] = useState([]);
-  const [user, setUser] = useState(null);
+  const [{ user }, dispatch] = useStateValue();
 
   useEffect(() => {
     axios.get("/messages/sync").then((res) => {
@@ -39,7 +40,7 @@ function App() {
         <Login />
       ) : (
         <div className="app__body">
-          <Sidebar />
+          <Sidebar messages={messages} />
           <Chat messages={messages} />
         </div>
       )}
